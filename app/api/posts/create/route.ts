@@ -19,6 +19,9 @@ date: '${date}'
 tags: [${tags.map((tag) => `'${tag}'`).join(', ')}]
 draft: false
 summary: ''
+layout: 'PostLayout'
+images: []
+authors: ['default']
 ---
 
 `
@@ -36,9 +39,14 @@ summary: ''
     const filePath = path.join(postsDir, `${slug}.mdx`)
     fs.writeFileSync(filePath, fullContent)
 
-    return NextResponse.json({ success: true, slug })
+    // 返回成功响应，包含文章路径
+    return NextResponse.json({
+      success: true,
+      slug,
+      path: `/blog/${slug}`,
+    })
   } catch (error) {
     console.error('Error saving post:', error)
     return NextResponse.json({ error: 'Failed to save post' }, { status: 500 })
   }
-} 
+}

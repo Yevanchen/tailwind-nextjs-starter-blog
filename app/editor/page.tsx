@@ -2,11 +2,13 @@
 
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 import SectionContainer from '@/components/SectionContainer'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
 export default function EditorPage() {
+  const router = useRouter()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [tags, setTags] = useState('')
@@ -29,8 +31,11 @@ export default function EditorPage() {
         body: JSON.stringify(formData),
       })
 
+      const data = await response.json()
+
       if (response.ok) {
         alert('文章保存成功！')
+        router.push(data.path)
       } else {
         throw new Error('保存失败')
       }
@@ -50,7 +55,10 @@ export default function EditorPage() {
 
         <div className="space-y-4 py-8">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
               标题
             </label>
             <input
@@ -63,7 +71,10 @@ export default function EditorPage() {
           </div>
 
           <div>
-            <label htmlFor="tags" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label
+              htmlFor="tags"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
               标签 (用逗号分隔)
             </label>
             <input
@@ -77,7 +88,10 @@ export default function EditorPage() {
           </div>
 
           <div>
-            <label htmlFor="content" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label
+              htmlFor="content"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
               内容
             </label>
             <div className="mt-1" data-color-mode="auto">
@@ -97,4 +111,4 @@ export default function EditorPage() {
       </div>
     </SectionContainer>
   )
-} 
+}
