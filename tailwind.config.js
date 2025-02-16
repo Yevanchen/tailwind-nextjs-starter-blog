@@ -5,12 +5,10 @@ const colors = require('tailwindcss/colors')
 /** @type {import("tailwindcss/types").Config } */
 module.exports = {
   content: [
-    './node_modules/pliny/**/*.js',
-    './app/**/*.{js,ts,jsx,tsx}',
-    './pages/**/*.{js,ts,tsx}',
-    './components/**/*.{js,ts,tsx}',
-    './layouts/**/*.{js,ts,tsx}',
-    './data/**/*.mdx',
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './layouts/**/*.{js,ts,jsx,tsx}',
+    './app/**/*.{js,ts,jsx,tsx}', // Ensure to include the app directory
   ],
   darkMode: 'class',
   theme: {
@@ -27,6 +25,9 @@ module.exports = {
       colors: {
         primary: colors.pink,
         gray: colors.gray,
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        // ... other custom colors ...
       },
       zIndex: {
         60: '60',
@@ -70,7 +71,26 @@ module.exports = {
           },
         },
       }),
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+      keyframes: {
+        chaoticBlob: {
+          // ... 关键帧定义
+        },
+        colorChange: {
+          // ... 关键帧定义
+        },
+      },
+      animation: {
+        'chaotic-blob': 'chaoticBlob 6s ease-in-out infinite, colorChange 10s linear infinite',
+      },
+      transitionDuration: {
+        4000: '4000ms',
+      },
     },
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+  plugins: [],
 }
