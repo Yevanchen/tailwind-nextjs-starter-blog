@@ -69,6 +69,10 @@ const nextConfig = {
   eslint: {
     dirs: ['app', 'components', 'layouts', 'scripts'],
   },
+  experimental: {
+    esmExternals: true,
+    serverComponentsExternalPackages: ['contentlayer2', 'next-contentlayer2'],
+  },
   images: {
     remotePatterns: [
       {
