@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
+import fs from 'fs/promises'
 import path from 'path'
 
 export async function POST(req: Request) {
@@ -29,24 +29,25 @@ authors: ['default']
     // 完整的文章内容
     const fullContent = frontmatter + content
 
-    // 确保目录存在
-    const postsDir = path.join(process.cwd(), 'data/blog')
-    if (!fs.existsSync(postsDir)) {
-      fs.mkdirSync(postsDir, { recursive: true })
-    }
+    // 文件路径
+    const filePath = path.join(process.cwd(), 'data/blog', `${slug}.mdx`)
 
-    // 写入文件
-    const filePath = path.join(postsDir, `${slug}.mdx`)
-    fs.writeFileSync(filePath, fullContent)
+    // 本地保存文件
+    await fs.writeFile(filePath, fullContent, 'utf-8')
+    console.log(`文章已保存到: ${filePath}`)
 
     // 返回成功响应，包含文章路径
     return NextResponse.json({
       success: true,
       slug,
       path: `/blog/${slug}`,
+      message: '文章已成功保存到本地',
     })
   } catch (error) {
-    console.error('Error saving post:', error)
-    return NextResponse.json({ error: 'Failed to save post' }, { status: 500 })
+    console.error('保存文章时出错:', error)
+    return NextResponse.json(
+      { error: '保存文章失败', details: error instanceof Error ? error.message : '未知错误' },
+      { status: 500 }
+    )
   }
 }
