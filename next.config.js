@@ -70,7 +70,7 @@ const nextConfig = {
     dirs: ['app', 'components', 'layouts', 'scripts'],
   },
   experimental: {
-    esmExternals: true,
+    esmExternals: 'loose',
     serverComponentsExternalPackages: ['contentlayer2', 'next-contentlayer2'],
   },
   images: {
@@ -90,12 +90,17 @@ const nextConfig = {
       },
     ]
   },
-  webpack: (config, options) => {
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false,
+        path: false,
+      }
+    }
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     })
-
     return config
   },
 }
