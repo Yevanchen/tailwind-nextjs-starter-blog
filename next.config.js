@@ -62,7 +62,6 @@ const unoptimized = process.env.UNOPTIMIZED ? true : undefined
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
 const nextConfig = {
-  output,
   basePath,
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
@@ -73,6 +72,17 @@ const nextConfig = {
   experimental: {
     esmExternals: 'loose',
     serverComponentsExternalPackages: ['contentlayer2', 'next-contentlayer2'],
+  },
+  // Configure static export
+  output: process.env.EXPORT ? 'export' : undefined,
+  // Indicate that /tags is a valid route alongside /tags/[tag]
+  async rewrites() {
+    return [
+      {
+        source: '/tags',
+        destination: '/tags/index',
+      },
+    ]
   },
   images: {
     remotePatterns: [
