@@ -66,12 +66,14 @@ const nextConfig = {
   basePath,
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  trailingSlash: true,
   eslint: {
     dirs: ['app', 'components', 'layouts', 'scripts'],
   },
   experimental: {
     esmExternals: 'loose',
     serverComponentsExternalPackages: ['contentlayer2', 'next-contentlayer2'],
+    appDir: true,
   },
   images: {
     remotePatterns: [
@@ -91,12 +93,13 @@ const nextConfig = {
     ]
   },
   webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        fs: false,
-        path: false,
-      }
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      path: false,
+      assert: false,
     }
+
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
