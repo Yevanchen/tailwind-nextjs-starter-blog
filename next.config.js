@@ -75,15 +75,6 @@ const nextConfig = {
   },
   // Configure static export
   output: process.env.EXPORT ? 'export' : undefined,
-  // Indicate that /tags is a valid route alongside /tags/[tag]
-  async rewrites() {
-    return [
-      {
-        source: '/tags',
-        destination: '/tags/index',
-      },
-    ]
-  },
   images: {
     remotePatterns: [
       {
@@ -91,7 +82,7 @@ const nextConfig = {
         hostname: 'picsum.photos',
       },
     ],
-    unoptimized,
+    unoptimized: process.env.EXPORT ? true : unoptimized,
   },
   async headers() {
     return [
