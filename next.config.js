@@ -73,7 +73,6 @@ const nextConfig = {
   experimental: {
     esmExternals: 'loose',
     serverComponentsExternalPackages: ['contentlayer2', 'next-contentlayer2'],
-    appDir: true,
   },
   images: {
     remotePatterns: [
@@ -98,12 +97,23 @@ const nextConfig = {
       fs: false,
       path: false,
       assert: false,
+      punycode: false,
+    }
+
+    if (!isServer) {
+      // Resolve native modules for client-side
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        sharp$: false,
+        esbuild$: false,
+      }
     }
 
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     })
+
     return config
   },
 }
