@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs/promises'
-import path from 'path'
+import { createOrUpdateFile } from '@/lib/github'
 
 export async function POST(req: Request) {
   try {
@@ -30,18 +29,21 @@ authors: ['default']
     const fullContent = frontmatter + content
 
     // 文件路径
-    const filePath = path.join(process.cwd(), 'data/blog', `${slug}.mdx`)
+    const filePath = `data/blog/${slug}.mdx`
 
-    // 本地保存文件
-    await fs.writeFile(filePath, fullContent, 'utf-8')
-    console.log(`文章已保存到: ${filePath}`)
+    // 提交到 GitHub
+    await createOrUpdateFile(
+      filePath,
+      fullContent,
+      `feat(blog): add new post - ${title}`
+    )
 
     // 返回成功响应，包含文章路径
     return NextResponse.json({
       success: true,
       slug,
       path: `/blog/${slug}`,
-      message: '文章已成功保存到本地',
+      message: '文章已成功保存到 GitHub',
     })
   } catch (error) {
     console.error('保存文章时出错:', error)

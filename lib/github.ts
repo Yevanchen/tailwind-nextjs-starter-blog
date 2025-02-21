@@ -13,7 +13,7 @@ console.log('GitHub Configuration:', {
 interface GitHubAPIOptions {
   method: string
   path: string
-  body?: Record<string, unknown>
+  body?: any
 }
 
 async function githubAPI({ method, path, body }: GitHubAPIOptions) {
