@@ -13,7 +13,25 @@ console.log('GitHub Configuration:', {
 interface GitHubAPIOptions {
   method: string
   path: string
-  body?: any
+  body?: Record<string, string | number | boolean | null | undefined>
+}
+
+interface GitHubFileInfo {
+  sha: string
+  content: string
+  encoding: string
+  size: number
+  name: string
+  path: string
+  url: string
+}
+
+interface GitHubBranchInfo {
+  name: string
+  commit: {
+    sha: string
+    url: string
+  }
 }
 
 async function githubAPI({ method, path, body }: GitHubAPIOptions) {
@@ -58,7 +76,7 @@ export async function createOrUpdateFile(filePath: string, content: string, mess
     const fileInfo = await githubAPI({
       method: 'GET',
       path: `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}`,
-    })
+    }) as GitHubFileInfo
     sha = fileInfo.sha
     console.log('Existing file found, SHA:', sha)
   } catch (error) {
@@ -77,10 +95,10 @@ export async function createOrUpdateFile(filePath: string, content: string, mess
   })
 }
 
-export async function getCurrentBranch() {
+export async function getCurrentBranch(): Promise<string> {
   const response = await githubAPI({
     method: 'GET',
     path: `/repos/${REPO_OWNER}/${REPO_NAME}/branches/main`,
-  })
+  }) as GitHubBranchInfo
   return response.name
 }
