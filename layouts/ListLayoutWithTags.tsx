@@ -15,6 +15,11 @@ interface PaginationProps {
   totalPages: number
   currentPage: number
 }
+
+interface DeleteHandler {
+  onDelete: (postId: string) => Promise<void>
+}
+
 interface ListLayoutProps {
   posts: CoreContent<Blog>[]
   title: string
@@ -67,7 +72,7 @@ export default function ListLayoutWithTags({
   title,
   initialDisplayPosts = [],
   pagination,
-}: ListLayoutProps) {
+}: ListLayoutProps & DeleteHandler) {
   const pathname = usePathname()
   const tagCounts = tagData as Record<string, number>
   const tagKeys = Object.keys(tagCounts)
@@ -143,15 +148,35 @@ export default function ListLayoutWithTags({
                         </dd>
                       </dl>
                       <div className="space-y-3">
-                        <div>
+                        <div className="group flex items-center justify-between">
                           <h2 className="text-2xl font-bold leading-8 tracking-tight">
                             <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
                               {title}
                             </Link>
                           </h2>
-                          <div className="flex flex-wrap">
-                            {tags?.map((tag) => <Tag key={tag} text={tag} />)}
-                          </div>
+                          <button
+                            onClick={() => onDelete(path)}
+                            className="text-sm text-gray-500 opacity-0 transition-opacity duration-200 hover:text-red-500 group-hover:opacity-100"
+                            aria-label="Delete post"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              className="h-5 w-5"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                        <div className="flex flex-wrap">
+                          {tags?.map((tag) => <Tag key={tag} text={tag} />)}
                         </div>
                         <div className="prose max-w-none text-gray-500 dark:text-gray-400">
                           {summary}
