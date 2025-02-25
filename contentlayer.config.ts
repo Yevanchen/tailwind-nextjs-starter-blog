@@ -151,16 +151,24 @@ export default makeSource({
   mdx: {
     cwd: process.cwd(),
     remarkPlugins: [
+      // @ts-ignore: Type incompatibility between different VFile versions
       remarkExtractFrontmatter,
+      // @ts-ignore
       remarkGfm,
+      // @ts-ignore
       remarkCodeTitles,
+      // @ts-ignore
       remarkMath,
+      // @ts-ignore
       remarkImgToJsx,
+      // @ts-ignore
       remarkAlert,
     ],
     rehypePlugins: [
+      // @ts-ignore
       rehypeSlug,
       [
+        // @ts-ignore
         rehypeAutolinkHeadings,
         {
           behavior: 'prepend',
@@ -170,9 +178,13 @@ export default makeSource({
           content: icon,
         },
       ],
+      // @ts-ignore
       rehypeKatex,
+      // @ts-ignore
       [rehypeCitation, { path: path.join(root, 'data') }],
+      // @ts-ignore
       [rehypePrismPlus, { defaultLanguage: 'js', ignoreMissing: true }],
+      // @ts-ignore
       rehypePresetMinify,
     ],
   },
