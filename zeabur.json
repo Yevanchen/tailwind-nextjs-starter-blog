@@ -1,6 +1,12 @@
 {
   "build": {
     "dockerfile": "./Dockerfile",
-    "ignoredPaths": [".git", ".github", "node_modules", ".next", ".contentlayer"]
+    "ignoredPaths": [".git", ".github", "node_modules", ".next", ".contentlayer"],
+    "buildArgs": {
+      "NEXT_TELEMETRY_DISABLED": "1",
+      "SHARP_IGNORE_GLOBAL_LIBVIPS": "1",
+      "npm_config_build_from_source": "true"
+    },
+    "timeout": 1800
   }
 }
