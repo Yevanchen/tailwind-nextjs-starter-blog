@@ -25,6 +25,19 @@ RUN yarn install --immutable --network-timeout 600000
 # 开发环境构建
 FROM base AS builder
 WORKDIR /app
+
+# 首先复制必要的目录和文件
+COPY tsconfig.json tsconfig.contentlayer.json next.config.js ./
+COPY types ./types
+COPY app ./app
+COPY components ./components
+COPY lib ./lib
+COPY data ./data
+COPY layouts ./layouts
+COPY public ./public
+COPY css ./css
+
+# 然后复制其他目录和文件
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
