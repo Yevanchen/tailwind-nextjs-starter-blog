@@ -80,8 +80,8 @@ const nextConfig = {
     esmExternals: 'loose',
     serverComponentsExternalPackages: ['contentlayer2', 'next-contentlayer2'],
   },
-  // Configure static export
-  output: process.env.EXPORT ? 'export' : 'standalone',
+  // 禁用静态生成，使用服务端渲染
+  output: 'standalone',
   images: {
     remotePatterns: [
       {
