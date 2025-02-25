@@ -6,9 +6,17 @@ import { getAllBlogs, subscribeToBlogChanges, deleteBlog } from '@/lib/blogServi
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import formatDate from '@/lib/utils/formatDate'
+import LoginModal from '@/components/LoginModal'
+import useAuthStore from '@/lib/auth'
 
 export default function BlogPage() {
   const [blogs, setBlogs] = useState<Blog[]>([])
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const [pendingAction, setPendingAction] = useState<{
+    type: 'delete' | 'create'
+    id?: string
+  } | null>(null)
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   useEffect(() => {
     // 初始加载博客
@@ -32,12 +40,37 @@ export default function BlogPage() {
   }, [])
 
   const handleDelete = async (id: string) => {
+    if (!isAuthenticated) {
+      setPendingAction({ type: 'delete', id })
+      setIsLoginModalOpen(true)
+      return
+    }
     try {
       await deleteBlog(id)
-      // 不需要手动更新状态，因为实时监听会自动更新
     } catch (error) {
       console.error('删除博客失败:', error)
     }
+  }
+
+  const handleCreate = () => {
+    if (!isAuthenticated) {
+      setPendingAction({ type: 'create' })
+      setIsLoginModalOpen(true)
+      return
+    }
+    window.location.href = '/blog/editor'
+  }
+
+  const handleLoginModalClose = () => {
+    setIsLoginModalOpen(false)
+    if (isAuthenticated && pendingAction) {
+      if (pendingAction.type === 'delete' && pendingAction.id) {
+        handleDelete(pendingAction.id)
+      } else if (pendingAction.type === 'create') {
+        window.location.href = '/blog/editor'
+      }
+    }
+    setPendingAction(null)
   }
 
   return (
@@ -48,12 +81,12 @@ export default function BlogPage() {
             <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
               博客列表
             </h1>
-            <Link
-              href="/blog/editor"
+            <button
+              onClick={handleCreate}
               className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600"
             >
               新建博客
-            </Link>
+            </button>
           </div>
         </div>
         <ul>
@@ -98,6 +131,7 @@ export default function BlogPage() {
           ))}
         </ul>
       </div>
+      <LoginModal isOpen={isLoginModalOpen} onClose={handleLoginModalClose} />
     </>
   )
 }
