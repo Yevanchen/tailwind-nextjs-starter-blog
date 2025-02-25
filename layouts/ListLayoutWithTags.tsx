@@ -72,6 +72,7 @@ export default function ListLayoutWithTags({
   title,
   initialDisplayPosts = [],
   pagination,
+  onDelete,
 }: ListLayoutProps & DeleteHandler) {
   const pathname = usePathname()
   const tagCounts = tagData as Record<string, number>
