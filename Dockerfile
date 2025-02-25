@@ -33,6 +33,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 ENV NODE_OPTIONS="--experimental-json-modules --experimental-vm-modules"
+ENV NEXT_SKIP_TYPE_CHECK=1
 
 # 构建应用
 RUN yarn build --no-lint

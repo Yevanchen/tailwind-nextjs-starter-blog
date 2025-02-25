@@ -16,7 +16,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": ".",
-    "types": ["firebase"],
     "paths": {
       "@/components/*": ["components/*"],
       "@/data/*": ["data/*"],

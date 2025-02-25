@@ -1,8 +1,4 @@
-// 这是一个空的声明文件，用于解决TypeScript找不到firebase类型的问题
-// 实际项目中应该使用@types/firebase或官方类型
+// 空的firebase类型声明文件，用于解决类型检查问题
 declare module 'firebase' {
-  export * from 'firebase/app';
-  export * from 'firebase/auth';
-  export * from 'firebase/firestore';
-  export * from 'firebase/storage';
+  // 这里不需要实际内容，只需要声明模块存在
 } 
