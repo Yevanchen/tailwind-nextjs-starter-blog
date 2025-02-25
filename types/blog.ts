@@ -1,13 +1,11 @@
 export interface Blog {
   id: string
   title: string
-  date: string
-  tags: string[]
-  draft: boolean
-  summary: string
-  content: string
-  slug: string
-  fileName: string
-  lastmod?: string
-  authors?: string[]
+  slug?: string
+  date?: string
+  tags?: string[]
+  summary?: string
+  content?: string
+  author?: string
+  // 添加其他可能需要的字段
 }

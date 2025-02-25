@@ -24,6 +24,19 @@ const projectsData: Project[] = [
     imgSrc: '/static/images/AI Tamer.png',
     href: 'https://mp.weixin.qq.com/s/Eg704H6Nm47W0q0CbyUlaA',
   },
+  {
+    title: 'Blog Platform',
+    description:
+      '基于 Next.js 和 Firebase 构建的个人博客平台，支持 Markdown 编写，实时搜索等功能。',
+    imgSrc: '/static/images/myblog.png',
+    href: 'https://github.com/Yevanchen/my-blog',
+  },
+  {
+    title: 'Coming Soon',
+    description: '更多项目正在开发中...',
+    imgSrc: '/static/images/time-machine.jpg',
+    href: '#',
+  },
 ]
 
 export default projectsData

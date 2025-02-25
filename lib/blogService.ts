@@ -8,6 +8,8 @@ import {
   query,
   updateDoc,
   setDoc,
+  where,
+  or,
 } from 'firebase/firestore'
 import { db } from './firebase'
 import type { Blog } from '../types/blog'
@@ -74,6 +76,34 @@ export const getAllBlogs = async (): Promise<Blog[]> => {
     )
   } catch (error) {
     console.error('获取博客列表失败:', error)
+    throw error
+  }
+}
+
+// 搜索博客（按标题和标签关键词匹配）
+export const searchBlogs = async (keyword: string): Promise<Blog[]> => {
+  try {
+    if (!keyword.trim()) {
+      return await getAllBlogs()
+    }
+
+    // Firebase 不支持部分字符串匹配查询，所以我们获取所有博客并在客户端过滤
+    const blogs = await getAllBlogs()
+
+    // 转换关键词为小写以进行不区分大小写的搜索
+    const lowerKeyword = keyword.toLowerCase()
+
+    return blogs.filter((blog) => {
+      // 检查标题是否包含关键词
+      const titleMatch = blog.title?.toLowerCase().includes(lowerKeyword)
+
+      // 检查标签是否包含关键词
+      const tagMatch = blog.tags?.some((tag) => tag.toLowerCase().includes(lowerKeyword))
+
+      return titleMatch || tagMatch
+    })
+  } catch (error) {
+    console.error('搜索博客失败:', error)
     throw error
   }
 }
