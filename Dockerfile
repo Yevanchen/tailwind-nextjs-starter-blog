@@ -35,8 +35,8 @@ ENV NODE_ENV=production
 ENV NODE_OPTIONS="--experimental-json-modules --experimental-vm-modules"
 ENV NEXT_SKIP_TYPE_CHECK=1
 
-# 构建应用
-RUN yarn build --no-lint
+# 构建应用 - 直接使用next build命令而不是yarn build，并添加--no-lint参数
+RUN NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 npx next build --no-lint
 
 # 生产环境
 FROM base AS runner

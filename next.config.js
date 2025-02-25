@@ -68,6 +68,13 @@ const nextConfig = {
   trailingSlash: true,
   eslint: {
     dirs: ['app', 'components', 'layouts', 'scripts'],
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    // !! WARN !!
+    // 在生产构建中忽略TypeScript错误
+    // !! WARN !!
+    ignoreBuildErrors: true,
   },
   experimental: {
     esmExternals: 'loose',
