@@ -23,12 +23,17 @@ export default function Page({ params }: { params: { page: string } }) {
     totalPages: Math.ceil(posts.length / POSTS_PER_PAGE),
   }
 
+  const handleDelete = async (postId: string): Promise<void> => {
+    console.log('Delete not implemented for static pages', postId)
+  }
+
   return (
     <ListLayout
       posts={posts}
       initialDisplayPosts={initialDisplayPosts}
       pagination={pagination}
       title="All Posts"
+      onDelete={handleDelete}
     />
   )
 }
