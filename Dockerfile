@@ -18,9 +18,8 @@ ENV NEXT_SHARP_PATH=/tmp/node_modules/sharp
 ENV npm_config_build_from_source=true
 ENV ESBUILD_BINARY_PATH=/usr/local/bin/esbuild
 
-# 安装依赖
-RUN yarn config set networkTimeout 600000 && \
-    yarn install --immutable --network-timeout 600000
+# 安装依赖 - 直接在命令中设置超时参数
+RUN yarn install --immutable --network-timeout 600000
 
 # 开发环境构建
 FROM base AS builder
