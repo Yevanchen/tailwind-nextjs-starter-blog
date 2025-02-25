@@ -1,0 +1,6 @@
+{
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "ignoredPaths": [".git", ".github", "node_modules", ".next", ".contentlayer"]
+  }
+}

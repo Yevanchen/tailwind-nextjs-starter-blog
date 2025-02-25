@@ -1,0 +1,7 @@
+.git
+.github
+.next
+node_modules
+.contentlayer
+yarn-error.log
+.DS_Store 

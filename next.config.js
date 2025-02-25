@@ -74,7 +74,7 @@ const nextConfig = {
     serverComponentsExternalPackages: ['contentlayer2', 'next-contentlayer2'],
   },
   // Configure static export
-  output: process.env.EXPORT ? 'export' : undefined,
+  output: process.env.EXPORT ? 'export' : 'standalone',
   images: {
     remotePatterns: [
       {
@@ -97,7 +97,6 @@ const nextConfig = {
       ...config.resolve.fallback,
       fs: false,
       path: false,
-      assert: false,
       punycode: false,
     }
 
