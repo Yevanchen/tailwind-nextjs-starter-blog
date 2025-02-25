@@ -95,7 +95,7 @@ export default function BlogPage() {
               <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                 <div>
                   <p className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                    {formatDate(blog.date)}
+                    {blog.date ? formatDate(blog.date) : '暂无日期'}
                   </p>
                 </div>
                 <div className="space-y-3 xl:col-span-3">
@@ -110,9 +110,7 @@ export default function BlogPage() {
                         </Link>
                       </h3>
                       <div className="flex flex-wrap">
-                        {blog.tags.map((tag) => (
-                          <Tag key={tag} text={tag} />
-                        ))}
+                        {blog.tags?.map((tag) => <Tag key={tag} text={tag} />)}
                       </div>
                     </div>
                     <button
