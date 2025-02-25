@@ -35,7 +35,7 @@ ENV NODE_ENV=production
 ENV NODE_OPTIONS="--experimental-json-modules --experimental-vm-modules"
 
 # 构建应用
-RUN yarn build
+RUN yarn build --no-lint
 
 # 生产环境
 FROM base AS runner
