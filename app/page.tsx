@@ -49,7 +49,7 @@ export default function HomePage() {
                   <dl>
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                      {formatDate(blog.date)}
+                      {blog.date ? formatDate(blog.date) : '暂无日期'}
                     </dd>
                   </dl>
                   <div className="space-y-5 xl:col-span-3">
@@ -64,9 +64,7 @@ export default function HomePage() {
                           </Link>
                         </h2>
                         <div className="flex flex-wrap">
-                          {blog.tags.map((tag) => (
-                            <Tag key={tag} text={tag} />
-                          ))}
+                          {blog.tags?.map((tag) => <Tag key={tag} text={tag} />)}
                         </div>
                       </div>
                       <div className="prose max-w-none text-gray-500 dark:text-gray-400">
