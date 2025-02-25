@@ -1,7 +1,7 @@
 FROM node:20-alpine AS base
 
 # 添加必要的构建工具和依赖
-RUN apk add --no-cache python3 g++ make git libc6-compat
+RUN apk add --no-cache python3 g++ make git libc6-compat linux-headers vips-dev build-base
 
 # 安装依赖
 FROM base AS deps
@@ -11,14 +11,15 @@ WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .yarnrc.yml ./
 COPY .yarn ./.yarn
 
-# 分两步安装依赖，先安装生产依赖，再安装所有依赖(包括开发依赖)
-# 首先设置构建相关环境变量
+# 设置构建相关环境变量
 ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
 ENV NEXT_SHARP_PATH=/tmp/node_modules/sharp
 ENV npm_config_build_from_source=true
 ENV ESBUILD_BINARY_PATH=/usr/local/bin/esbuild
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
 
-# 安装依赖 - 直接在命令中设置超时参数
+# 安装依赖 - 首先安装原生依赖
 RUN yarn install --immutable --network-timeout 600000
 
 # 开发环境构建
@@ -32,6 +33,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
 ENV SHARP_IGNORE_GLOBAL_LIBVIPS 1
 ENV npm_config_build_from_source true
+ENV NODE_OPTIONS="--experimental-json-modules --experimental-vm-modules"
 
 # 构建应用
 RUN yarn build
