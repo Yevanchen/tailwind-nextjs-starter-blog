@@ -52,6 +52,7 @@
     "next": "14.2.3",
     "next-contentlayer": "^0.3.4",
     "next-contentlayer2": "latest",
+    "next-mdx-remote": "4.4.1",
     "next-themes": "^0.3.0",
     "pliny": "0.2.1",
     "postcss": "^8.4.24",
