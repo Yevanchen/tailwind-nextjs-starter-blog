@@ -10,6 +10,7 @@ import {
   setDoc,
   where,
   or,
+  getDoc,
 } from 'firebase/firestore'
 import { db } from './firebase'
 import type { Blog } from '../types/blog'
@@ -76,6 +77,38 @@ export const getAllBlogs = async (): Promise<Blog[]> => {
     )
   } catch (error) {
     console.error('获取博客列表失败:', error)
+    throw error
+  }
+}
+
+// 根据slug获取单篇博客
+export const getBlogBySlug = async (slug: string, timeout = 5000): Promise<Blog | null> => {
+  try {
+    // 创建超时Promise
+    const timeoutPromise = new Promise<null>((_, reject) =>
+      setTimeout(() => reject(new Error('Firebase查询超时')), timeout)
+    )
+
+    // 创建查询Promise
+    const queryPromise = async () => {
+      const q = query(blogsRef, where('slug', '==', slug))
+      const querySnapshot = await getDocs(q)
+
+      if (querySnapshot.empty) {
+        return null
+      }
+
+      const blogDoc = querySnapshot.docs[0]
+      return {
+        id: blogDoc.id,
+        ...blogDoc.data(),
+      } as Blog
+    }
+
+    // 使用Promise.race实现超时控制
+    return await Promise.race([queryPromise(), timeoutPromise])
+  } catch (error) {
+    console.error(`获取博客[${slug}]失败:`, error)
     throw error
   }
 }

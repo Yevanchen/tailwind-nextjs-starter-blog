@@ -18,6 +18,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { Blog as FirebaseBlog } from '@/types/blog'
 import { serialize } from 'next-mdx-remote/serialize'
+import { getBlogBySlug } from '@/lib/blogService'
 
 // 创建一个客户端组件来包装MDXRemote
 import dynamic from 'next/dynamic'
@@ -42,41 +43,44 @@ export async function generateMetadata({ params }: BlogProps): Promise<Metadata>
 
   if (!post) {
     // 尝试从Firebase获取博客元数据
-    const blogRef = collection(db, 'blogs')
-    const q = query(blogRef, where('slug', '==', slug))
-    const querySnapshot = await getDocs(q)
+    try {
+      const blogData = await getBlogBySlug(slug)
 
-    if (querySnapshot.empty) {
+      if (!blogData) {
+        return {
+          title: 'Blog Not Found',
+        }
+      }
+
+      return {
+        title: blogData.title,
+        description: blogData.summary,
+        openGraph: {
+          title: blogData.title,
+          description: blogData.summary,
+          url: `${siteMetadata.siteUrl}/blog/${slug}`,
+          siteName: siteMetadata.title,
+          locale: 'en_US',
+          type: 'article',
+          publishedTime: blogData.date,
+          modifiedTime: blogData.lastmod || blogData.date,
+          images: [],
+          authors: blogData.authors
+            ?.map((author) => `${siteMetadata.siteUrl}/author/${author}`)
+            .filter(Boolean) as string[],
+        },
+        twitter: {
+          card: 'summary_large_image',
+          title: blogData.title,
+          description: blogData.summary,
+          images: [],
+        },
+      }
+    } catch (error) {
+      console.error('获取Firebase博客元数据失败:', error)
       return {
         title: 'Blog Not Found',
       }
-    }
-
-    const blogData = querySnapshot.docs[0].data() as FirebaseBlog
-
-    return {
-      title: blogData.title,
-      description: blogData.summary,
-      openGraph: {
-        title: blogData.title,
-        description: blogData.summary,
-        url: `${siteMetadata.siteUrl}/blog/${slug}`,
-        siteName: siteMetadata.title,
-        locale: 'en_US',
-        type: 'article',
-        publishedTime: blogData.date,
-        modifiedTime: blogData.lastmod || blogData.date,
-        images: [],
-        authors: blogData.authors
-          ?.map((author) => `${siteMetadata.siteUrl}/author/${author}`)
-          .filter(Boolean) as string[],
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: blogData.title,
-        description: blogData.summary,
-        images: [],
-      },
     }
   }
 
@@ -150,27 +154,14 @@ export default async function Page({ params }: BlogProps) {
   }
 
   // 如果静态内容中没有找到，尝试从Firebase获取
-  const blogRef = collection(db, 'blogs')
-  const q = query(blogRef, where('slug', '==', slug))
-
   try {
-    // 添加超时控制
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error('Firebase查询超时')), 5000)
-    )
+    // 使用新的getBlogBySlug函数获取博客数据
+    const blogData = await getBlogBySlug(slug)
 
-    const queryPromise = getDocs(q)
-    // 使用类型断言，因为我们知道Promise.race的结果是queryPromise的类型
-    const querySnapshot = await Promise.race([queryPromise, timeoutPromise])
-
-    if (querySnapshot.empty) {
+    if (!blogData) {
       console.log(`未找到slug为${slug}的博客`)
       return notFound()
     }
-
-    // 从Firebase获取博客数据
-    const blogDoc = querySnapshot.docs[0]
-    const blogData = blogDoc.data() as FirebaseBlog
 
     // 处理作者信息
     const authorList = blogData.authors || ['default']
