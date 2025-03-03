@@ -90,6 +90,9 @@ module.exports = {
       transitionDuration: {
         4000: '4000ms',
       },
+      transitionProperty: {
+        colors: 'color, background-color, border-color, text-decoration-color, fill, stroke',
+      },
     },
   },
   plugins: [],
