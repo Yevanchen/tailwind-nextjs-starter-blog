@@ -135,7 +135,15 @@ export const searchBlogs = async (keyword: string): Promise<Blog[]> => {
       const titleMatch = blog.title?.toLowerCase().includes(lowerKeyword)
 
       // 检查标签是否包含关键词
-      const tagMatch = blog.tags?.some((tag) => tag.toLowerCase().includes(lowerKeyword))
+      const tagMatch = blog.tags?.some((tag) => {
+        const lowerTag = tag.toLowerCase()
+        // 如果搜索词以#开头，移除#后再比较
+        if (lowerKeyword.startsWith('#')) {
+          const searchTag = lowerKeyword.slice(1)
+          return lowerTag.includes(searchTag) || searchTag.includes(lowerTag)
+        }
+        return lowerTag.includes(lowerKeyword) || lowerKeyword.includes(lowerTag)
+      })
 
       return titleMatch || tagMatch
     })
