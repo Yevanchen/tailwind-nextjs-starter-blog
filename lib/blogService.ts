@@ -11,6 +11,7 @@ import {
   where,
   or,
   getDoc,
+  orderBy,
 } from 'firebase/firestore'
 import { db } from './firebase'
 import type { Blog } from '../types/blog'
@@ -19,6 +20,9 @@ const COLLECTION_NAME = 'bloglist'
 
 // 获取博客集合引用
 const blogsRef = collection(db, COLLECTION_NAME)
+
+// 创建一个基础的排序查询
+const getOrderedQuery = () => query(blogsRef, orderBy('date', 'desc'))
 
 // 添加带指定 ID 的博客
 export const setBlogWithId = async (id: string, blog: Omit<Blog, 'id'>) => {
@@ -67,7 +71,7 @@ export const updateBlog = async (id: string, data: Partial<Blog>) => {
 // 获取所有博客
 export const getAllBlogs = async (): Promise<Blog[]> => {
   try {
-    const querySnapshot = await getDocs(query(blogsRef))
+    const querySnapshot = await getDocs(getOrderedQuery())
     return querySnapshot.docs.map(
       (doc) =>
         ({
@@ -143,7 +147,7 @@ export const searchBlogs = async (keyword: string): Promise<Blog[]> => {
 
 // 实时监听博客变化
 export const subscribeToBlogChanges = (callback: (blogs: Blog[]) => void) => {
-  return onSnapshot(query(blogsRef), (snapshot) => {
+  return onSnapshot(getOrderedQuery(), (snapshot) => {
     const blogs = snapshot.docs.map(
       (doc) =>
         ({
