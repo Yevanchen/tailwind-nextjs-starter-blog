@@ -32,6 +32,38 @@ const projectsData: Project[] = [
     href: 'https://github.com/Yevanchen/my-blog',
   },
   {
+    title: 'flask-todolist',
+    description: `cs50 homework project 在 dify 被毙掉两个项目后启动的第一个项目，一个简单的todolist`,
+    imgSrc: 'https://raw.githubusercontent.com/Yevanchen/images/main/myblog/20250820212517231.png',
+    href: 'https://github.com/Yevanchen/flask-todolist',
+  },
+  {
+    title: 'finance-flask',
+    description:
+      'CS50 Finance作业：一个用Flask和SQLite实现的模拟股票交易Web应用，支持注册登录、实时查股、买卖股票、投资组合和交易历史等功能。',
+    imgSrc: 'https://raw.githubusercontent.com/Yevanchen/images/main/myblog/20250820215302658.png',
+    href: 'https://github.com/Yevanchen/finance-flask',
+  },
+  {
+    title: 'GoalTrack Visualizer',
+    description:
+      '一个可视化习惯/待办追踪工具，基于 React、Vite、shadcn-ui 和 Tailwind CSS，支持多端同步和数据可视化，帮助你养成好习惯。',
+    imgSrc: 'https://raw.githubusercontent.com/Yevanchen/images/main/myblog/20250821003650594.png',
+    href: 'https://github.com/Yevanchen/goaltrack-visualizer',
+  },
+  {
+    title: 'fygen',
+    description: '我们在 2025 adventure hackathon 的作品 让Agent 给其他Agent 做可用的工具',
+    imgSrc: 'https://raw.githubusercontent.com/Yevanchen/images/main/myblog/20250821005136561.png',
+    href: 'https://fygen.idoknow.top/',
+  },
+  {
+    title: '生日贺卡 for 舒舒',
+    description: 'evan 给舒舒的生日贺卡，2024年4月。',
+    imgSrc: 'https://raw.githubusercontent.com/Yevanchen/images/main/myblog/20250821005547419.png',
+    href: 'https://birthdaycard-sable.vercel.app/',
+  },
+  {
     title: 'Coming Soon',
     description: '更多项目正在开发中...',
     imgSrc: '/static/images/time-machine.jpg',
