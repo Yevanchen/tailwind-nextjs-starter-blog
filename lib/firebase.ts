@@ -2,13 +2,13 @@ import { initializeApp } from 'firebase/app'
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCHD3X3wyBuheOPo-JI68V63ENTuU4nkd8',
-  authDomain: 'myblog-49cc0.firebaseapp.com',
-  projectId: 'myblog-49cc0',
-  storageBucket: 'myblog-49cc0.firebasestorage.app',
-  messagingSenderId: '975167914319',
-  appId: '1:975167914319:web:e860f72e9613c1f962853a',
-  measurementId: 'G-ECCZB7PDG7',
+  apiKey: 'AIzaSyBIFQnsOpMZ38H-KXQgaE1YCS5gxoYXBxw',
+  authDomain: 'myblog-personal.firebaseapp.com',
+  projectId: 'myblog-personal',
+  storageBucket: 'myblog-personal.firebasestorage.app',
+  messagingSenderId: '1071308430329',
+  appId: '1:1071308430329:web:3d04c1cc3681f16c7f7b28',
+  measurementId: 'G-M5JRXRQW4L',
 }
 
 // 初始化 Firebase
