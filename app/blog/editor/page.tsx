@@ -19,28 +19,41 @@ export default function EditorPage() {
 
   const handleSave = async () => {
     try {
-      const slug = title
+      // 验证标题不为空
+      if (!title.trim()) {
+        alert('❌ 标题不能为空')
+        return
+      }
+
+      // 生成 slug：先尝试从标题生成，如果失败则使用随机 ID
+      let slug = title
         .toLowerCase()
-        .replace(/[^a-zA-Z0-9\s]/g, '')
-        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9\s]/g, '')  // 删除特殊字符和数字
+        .trim()
+        .replace(/\s+/g, '-')  // 用 - 替换空格
+
+      // 如果 slug 为空（标题全是特殊字符或中文），使用短随机 ID
+      if (!slug || slug === '-') {
+        slug = `post-${nanoid(8)}`
+      }
 
       const fileName = `${slug}.mdx`
 
       const blogData = {
         title,
         date,
-        tags: tags.split(',').map((tag) => tag.trim()),
+        tags: tags.split(',').map((tag) => tag.trim()).filter(t => t),  // 移除空标签
         draft: false,
         summary,
         content,
-        slug,
+        slug,  // 确保 slug 永远不为空
         fileName,
         authors: ['Admin'], // 这里可以根据实际需求修改
         lastmod: new Date().toISOString(),
       }
 
       await addBlog(blogData)
-      alert('博客保存成功！')
+      alert(`✅ 博客保存成功！\n访问地址: /blog/${slug}`)
       router.push('/blog')
     } catch (error) {
       console.error('保存博客失败:', error)

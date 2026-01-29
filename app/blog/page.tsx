@@ -90,43 +90,55 @@ export default function BlogPage() {
           </div>
         </div>
         <ul>
-          {blogs.map((blog) => (
-            <li key={blog.id} className="py-4">
-              <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                <div>
-                  <p className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                    {blog.date ? formatDate(blog.date) : '暂无日期'}
-                  </p>
-                </div>
-                <div className="space-y-3 xl:col-span-3">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-2xl font-bold leading-8 tracking-tight">
-                        <Link
-                          href={`/blog/${blog.slug}`}
-                          className="text-gray-900 dark:text-gray-100"
-                        >
-                          {blog.title}
-                        </Link>
-                      </h3>
-                      <div className="flex flex-wrap">
-                        {blog.tags?.map((tag) => <Tag key={tag} text={tag} />)}
+          {blogs.map((blog) => {
+            // 检查 slug 是否有效
+            const isValidSlug = blog.slug && blog.slug.trim() !== ''
+            
+            return (
+              <li key={blog.id} className="py-4">
+                <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
+                  <div>
+                    <p className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                      {blog.date ? formatDate(blog.date) : '暂无日期'}
+                    </p>
+                  </div>
+                  <div className="space-y-3 xl:col-span-3">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="text-2xl font-bold leading-8 tracking-tight">
+                          {isValidSlug ? (
+                            <Link
+                              href={`/blog/${blog.slug}`}
+                              className="text-gray-900 dark:text-gray-100 hover:text-primary-500"
+                            >
+                              {blog.title}
+                            </Link>
+                          ) : (
+                            <span className="cursor-not-allowed text-gray-400 line-through dark:text-gray-600">
+                              {blog.title}
+                              <span className="ml-2 text-xs text-red-500"> (❌ Slug 无效，无法访问)</span>
+                            </span>
+                          )}
+                        </h3>
+                        <div className="flex flex-wrap">
+                          {blog.tags?.map((tag) => <Tag key={tag} text={tag} />)}
+                        </div>
                       </div>
+                      <button
+                        onClick={() => handleDelete(blog.id)}
+                        className="text-red-500 transition-colors hover:text-red-700"
+                      >
+                        删除
+                      </button>
                     </div>
-                    <button
-                      onClick={() => handleDelete(blog.id)}
-                      className="text-red-500 transition-colors hover:text-red-700"
-                    >
-                      删除
-                    </button>
+                    <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                      {blog.summary}
+                    </div>
                   </div>
-                  <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                    {blog.summary}
-                  </div>
-                </div>
-              </article>
-            </li>
-          ))}
+                </article>
+              </li>
+            )
+          })}
         </ul>
       </div>
       <LoginModal isOpen={isLoginModalOpen} onClose={handleLoginModalClose} />
