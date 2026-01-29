@@ -1,0 +1,61 @@
+---
+title: "Clawdbot 工作流体验：从代码到自动化"
+date: "2026-01-29T18:35:00Z"
+draft: false
+summary: "一天内完成 GitHub 集成、安全修复、文档转 skill、自动同步、bug 修复——展示 Clawdbot 作为生产力工具的实际应用"
+tags: ["clawdbot", "automation", "firebase", "github"]
+---
+
+## 今天用 Clawdbot 做了什么
+
+### 1. GitHub + Firebase 博客集成
+
+连接了 GitHub 账户，让 Clawdbot 直接操作我的代码仓库。绑定了基于 Firebase 的博客后端，实现了自动化发布流程——不用手动上传，提交 MDX 文件后自动推送到 Firebase。
+
+### 2. 安全审计与修复
+
+Clawdbot 扫描了我的代码历史，发现硬编码在仓库里的 Firebase API Token。问题不小——任何人拉下代码都能看到。
+
+修复方案：
+- 用环境变量替代硬编码密钥
+- 生成新的认证 token
+- 更新 Firestore 安全规则（需要 token 认证才能写入）
+- 即使旧 key 泄露，也无法写入数据了
+
+创建了新的 GitHub 仓库统一管理。
+
+### 3. 文档 → Skills（技能系统）
+
+把两个复杂的工作流做成了可重用的 Skill：
+
+**blog-publishing：** 完整的博客写作指南
+- 如何写 MDX + frontmatter
+- Slug 自动生成规则（中文标题也支持）
+- Firebase 配置和故障排除
+- 发布脚本
+
+**clawdbot-config：** Clawdbot 配置指南
+- 环境变量管理
+- GitHub/Discord 集成步骤
+- 配置文件架构
+
+### 4. 自动同步机制
+
+写了同步脚本，每小时自动检测 Skill 的新增/修改/删除，然后推送到 GitHub。相当于给知识库装了一个自动备份系统。
+
+### 5. 博客 Bug 修复
+
+发现了 3 个问题：
+- **空 Slug Bug**：中文标题或特殊字符标题导致 slug 为空，链接打不开
+- 修复方案：编辑器和脚本都增加了验证，fallback 生成随机 ID（`post-{random}`）
+- 博客列表现在会标记无效链接，一眼就看出问题
+
+另外还扫描了 Firebase 数据库，找出 3 篇文章有无效 slug，手动修复了。
+
+## 总结
+
+这个工作流展示了什么是"有用的 AI"——不是聊天，而是实实在在解决问题：代码安全、文档整理、自动化流程、bug 修复。
+
+从发现问题到实施方案，全程用 Shell + Python + Markdown 的组合，复杂度不低，但体验很顺畅。
+
+**工具能做什么，取决于你怎么用它。**
