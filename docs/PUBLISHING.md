@@ -28,7 +28,7 @@ draft: false
 
 ## Cloudflare
 
-目标账户：`cyefan2@gmail.com`。Cloudflare Workers 的 Git 集成关联本仓库：生产分支 `main`，构建命令 `npm run check`，部署命令 `npx wrangler deploy`。非生产分支可用 `npx wrangler versions upload` 生成预览。
+目标账户：`cyefan2@gmail.com`。Cloudflare Pages 的 Git 集成关联本仓库：生产分支 `main`，构建命令 `npm run check`，输出目录 `out`，Node 22。PR 分支自动生成预览地址；GitHub 检查与 Cloudflare 构建均通过后合并。无需额外配置部署命令或 GitHub 部署密钥。
 
 `SITE_URL` 必须设为实际生产地址（无结尾斜杠），用于 canonical、RSS 和 sitemap。`wrangler.jsonc` 只部署静态 `out/` 目录，未知路由使用真正的 404。所有检查通过后再部署；失败不会发布新版本。GitHub CI 单独运行同一套检查，不需要 Cloudflare 密钥。
 

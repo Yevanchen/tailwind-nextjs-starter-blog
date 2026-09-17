@@ -7,7 +7,7 @@ const siteMetadata = {
   locale: 'zh-CN',
   theme: 'system',
   stickyNav: false,
-  siteUrl: process.env.SITE_URL || 'https://chenyefan-blog.cyefan2.workers.dev',
+  siteUrl: process.env.SITE_URL || 'https://chenyefan-blog.pages.dev',
   siteRepo: 'https://github.com/Yevanchen/tailwind-nextjs-starter-blog',
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/twitter-card.png',
