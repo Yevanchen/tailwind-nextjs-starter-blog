@@ -1,226 +1,123 @@
-import 'css/prism.css'
-import 'katex/dist/katex.css'
-
-import PageTitle from '@/components/PageTitle'
-import { components } from '@/components/MDXComponents'
-import { MDXLayoutRenderer } from 'pliny/mdx-components'
-import { sortPosts, coreContent, allCoreContent } from 'pliny/utils/contentlayer'
-import { allBlogs, allAuthors } from 'contentlayer/generated'
-import type { Authors, Blog } from 'contentlayer/generated'
-import type { CoreContent } from 'pliny/utils/contentlayer'
-import PostSimple from '@/layouts/PostSimple'
-import PostLayout from '@/layouts/PostLayout'
-import PostBanner from '@/layouts/PostBanner'
-import { Metadata } from 'next'
-import siteMetadata from '@/data/siteMetadata'
+import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { collection, query, where, getDocs } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
-import { Blog as FirebaseBlog } from '@/types/blog'
-import { serialize } from 'next-mdx-remote/serialize'
-import { getBlogBySlug } from '@/lib/blogService'
+import { getPosts, getListedPosts, getPost, renderMarkdown, postUrl } from '@/lib/posts.mjs'
+import site from '@/data/siteMetadata'
 
-// 创建一个客户端组件来包装MDXRemote
-import dynamic from 'next/dynamic'
-
-const MDXRemoteClient = dynamic(() => import('@/components/MDXRemoteClient'), { ssr: false })
-
-const layouts = {
-  PostSimple,
-  PostLayout,
-  PostBanner,
-}
-
-interface BlogProps {
-  params: {
-    slug: string[]
-  }
-}
-
-export async function generateMetadata({ params }: BlogProps): Promise<Metadata> {
-  const slug = decodeURI(params.slug.join('/'))
-  const post = allBlogs.find((p) => p.slug === slug)
-
-  if (!post) {
-    // 尝试从Firebase获取博客元数据
-    try {
-      const blogData = await getBlogBySlug(slug)
-
-      if (!blogData) {
-        return {
-          title: 'Blog Not Found',
-        }
-      }
-
-      return {
-        title: blogData.title,
-        description: blogData.summary,
-        openGraph: {
-          title: blogData.title,
-          description: blogData.summary,
-          url: `${siteMetadata.siteUrl}/blog/${slug}`,
-          siteName: siteMetadata.title,
-          locale: 'en_US',
-          type: 'article',
-          publishedTime: blogData.date,
-          modifiedTime: blogData.lastmod || blogData.date,
-          images: [],
-          authors: blogData.authors
-            ?.map((author) => `${siteMetadata.siteUrl}/author/${author}`)
-            .filter(Boolean) as string[],
-        },
-        twitter: {
-          card: 'summary_large_image',
-          title: blogData.title,
-          description: blogData.summary,
-          images: [],
-        },
-      }
-    } catch (error) {
-      console.error('获取Firebase博客元数据失败:', error)
-      return {
-        title: 'Blog Not Found',
-      }
-    }
-  }
-
-  const publishedAt = new Date(post.date).toISOString()
-  const modifiedAt = new Date(post.lastmod || post.date).toISOString()
-  const authors = post.authors || ['default']
-  const authorDetails = authors.map((author) => {
-    const authorResults = allAuthors.find((a) => a.slug === author)
-    return coreContent(authorResults as Authors)
-  })
-
+type Props = { params: { slug: string[] } }
+export const dynamicParams = false
+export const generateStaticParams = () => getPosts().map((post) => ({ slug: post.slug.split('/') }))
+export function generateMetadata({ params }: Props): Metadata {
+  const post = getPost(decodeURIComponent(params.slug.join('/')))
+  if (!post) return {}
+  const url = `${site.siteUrl}${postUrl(post.canonicalSlug || post.slug)}`
   return {
     title: post.title,
     description: post.summary,
+    alternates: { canonical: url },
     openGraph: {
       title: post.title,
       description: post.summary,
-      url: `${siteMetadata.siteUrl}/blog/${post.slug}`,
-      siteName: siteMetadata.title,
-      locale: 'en_US',
+      url,
       type: 'article',
-      publishedTime: publishedAt,
-      modifiedTime: modifiedAt,
-      images: post.images || [],
-      authors: authorDetails
-        .map((author) => {
-          if (author?.name) {
-            return `${siteMetadata.siteUrl}/author/${author.slug}`
-          }
-          return null
-        })
-        .filter(Boolean) as string[],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.summary,
-      images: post.images || [],
+      publishedTime: post.date,
+      modifiedTime: post.lastmod || post.date,
+      authors: [site.author],
     },
   }
 }
-
-export const generateStaticParams = async () => {
-  const paths = allBlogs.map((p) => ({ slug: p.slug.split('/') }))
-
-  return paths
-}
-
-export default async function Page({ params }: BlogProps) {
-  const slug = decodeURI(params.slug.join('/'))
-
-  // 首先尝试从静态内容获取博客
-  const post = allBlogs.find((p) => p.slug === slug)
-
-  if (post) {
-    const mainContent = coreContent(post)
-    const authorList = post.authors || ['default']
-    const authorDetails = authorList.map((author) => {
-      const authorResults = allAuthors.find((a) => a.slug === author)
-      return coreContent(authorResults as Authors)
-    })
-    const layoutType = post.layout || 'PostLayout'
-    const Layout = layouts[layoutType] || PostLayout
-
-    return (
-      // @ts-ignore - 类型定义问题，实际上PostLayout接受authorDetails属性
-      <Layout content={mainContent} authorDetails={authorDetails} next={undefined} prev={undefined}>
-        <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
-      </Layout>
-    )
+export default function PostPage({ params }: Props) {
+  const post = getPost(decodeURIComponent(params.slug.join('/')))
+  if (!post) notFound()
+  const { html, headings } = renderMarkdown(post.content)
+  const posts = getListedPosts()
+  const index = posts.findIndex((item) => item.slug === post.slug)
+  const adjacent = [posts[index - 1], posts[index + 1]].filter(Boolean)
+  const structured = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    datePublished: post.date,
+    dateModified: post.lastmod || post.date,
+    description: post.summary,
+    author: { '@type': 'Person', name: site.author },
+    url: `${site.siteUrl}${postUrl(post.canonicalSlug || post.slug)}`,
   }
-
-  // 如果静态内容中没有找到，尝试从Firebase获取
-  try {
-    // 使用新的getBlogBySlug函数获取博客数据
-    const blogData = await getBlogBySlug(slug)
-
-    if (!blogData) {
-      console.log(`未找到slug为${slug}的博客`)
-      return notFound()
-    }
-
-    // 处理作者信息
-    const authorList = blogData.authors || ['default']
-    const authorDetails = authorList.map((author) => {
-      const authorResults = allAuthors.find((a) => a.slug === author)
-      return authorResults
-        ? coreContent(authorResults as Authors)
-        : ({
-            name: author,
-            slug: author,
-            avatar: '/static/images/avatar.png',
-          } as CoreContent<Authors>)
-    })
-
-    // 将Markdown内容转换为MDX
-    const mdxSource = await serialize(blogData.content || '')
-
-    // 创建与contentlayer格式兼容的内容对象
-    const mainContent = {
-      title: blogData.title,
-      date: blogData.date || new Date().toISOString(),
-      tags: blogData.tags || [],
-      lastmod: blogData.lastmod,
-      draft: blogData.draft,
-      summary: blogData.summary,
-      slug: blogData.slug || '',
-      path: `/blog/${blogData.slug}`,
-      readingTime: { text: '5 min read', minutes: 5, time: 300000, words: 1000 },
-      images: [],
-      toc: '[]',
-      type: 'Blog' as const,
-      filePath: `content/blog/${blogData.fileName || 'dynamic-content.mdx'}`,
-      structuredData: {
-        '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
-        headline: blogData.title,
-        datePublished: blogData.date,
-        dateModified: blogData.lastmod || blogData.date,
-        description: blogData.summary,
-        image: [],
-        url: `${siteMetadata.siteUrl}/blog/${blogData.slug}`,
-        author: authorList.map((author) => ({
-          '@type': 'Person',
-          name: author,
-        })),
-      },
-    } as CoreContent<Blog>
-
-    // 使用默认布局
-    const Layout = PostLayout
-
-    return (
-      // @ts-ignore - 类型定义问题，实际上PostLayout接受authorDetails属性
-      <Layout content={mainContent} authorDetails={authorDetails} next={undefined} prev={undefined}>
-        <MDXRemoteClient source={mdxSource} />
-      </Layout>
-    )
-  } catch (error) {
-    console.error('获取Firebase博客数据失败:', error)
-    return notFound()
-  }
+  return (
+    <article className="reading-page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structured).replace(/</g, '\\u003c') }}
+      />
+      <header className="article-header">
+        <Link href="/blog/" className="back-link">
+          ← 所有文章
+        </Link>
+        <div className="post-meta">
+          <time dateTime={post.date}>
+            {new Date(post.date).toLocaleDateString('zh-CN', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              timeZone: 'Asia/Shanghai',
+            })}
+          </time>
+          <span>{post.minutes} 分钟阅读</span>
+          <span>{site.author}</span>
+        </div>
+        <h1>{post.title}</h1>
+        {post.summary && <p className="article-summary">{post.summary}</p>}
+        <div className="post-meta">
+          {post.tags.map((tag) => (
+            <Link key={tag} href={`/tags/${encodeURIComponent(tag)}/`}>
+              {tag}
+            </Link>
+          ))}
+        </div>
+      </header>
+      {headings.length > 2 && (
+        <details className="article-toc" open={headings.length <= 8}>
+          <summary>文章目录</summary>
+          <nav aria-label="文章目录">
+            <ol>
+              {headings.map((heading) => (
+                <li
+                  key={heading.id}
+                  style={{ paddingLeft: `${Math.max(0, heading.level - 2)}rem` }}
+                >
+                  <a href={`#${heading.id}`}>{heading.title}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </details>
+      )}
+      {post.content.trim() ? (
+        <div
+          className="article-body prose prose-lg dark:prose-invert"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      ) : (
+        <p className="empty-note">这篇笔记原本没有正文，暂时保留标题与日期。</p>
+      )}
+      <footer className="article-footer">
+        <a
+          href={`${site.siteRepo}/edit/main/${post.file.split('/').map(encodeURIComponent).join('/')}`}
+        >
+          在 GitHub 上编辑这篇文章 ↗
+        </a>
+        <Link href="/blog/">返回所有文章</Link>
+      </footer>
+      {adjacent.length > 0 && (
+        <nav className="related-posts" aria-label="相邻文章">
+          <h2>继续阅读</h2>
+          {adjacent.map((item) => (
+            <Link key={item.slug} href={postUrl(item.slug)}>
+              {item.title} →
+            </Link>
+          ))}
+        </nav>
+      )}
+    </article>
+  )
 }

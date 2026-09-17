@@ -1,20 +1,25 @@
-import { Authors, allAuthors } from 'contentlayer/generated'
-import { MDXLayoutRenderer } from 'pliny/mdx-components'
-import AuthorLayout from '@/layouts/AuthorLayout'
-import { coreContent } from 'pliny/utils/contentlayer'
-import { genPageMetadata } from 'app/seo'
-
-export const metadata = genPageMetadata({ title: 'About' })
-
-export default function Page() {
-  const author = allAuthors.find((p) => p.slug === 'default') as Authors
-  const mainContent = coreContent(author)
-
+import fs from 'node:fs'
+import path from 'node:path'
+import matter from 'gray-matter'
+import { renderMarkdown } from '@/lib/posts.mjs'
+import { genPageMetadata } from '../seo'
+export const metadata = genPageMetadata({ title: '关于我' })
+export default function About() {
+  const { data, content } = matter(
+    fs.readFileSync(path.join(process.cwd(), 'data/authors/default.mdx'), 'utf8')
+  )
+  const { html } = renderMarkdown(content)
   return (
-    <>
-      <AuthorLayout content={mainContent}>
-        <MDXLayoutRenderer code={author.body.code} />
-      </AuthorLayout>
-    </>
+    <article className="reading-page">
+      <header className="page-intro">
+        <p className="eyebrow">ABOUT</p>
+        <h1>{data.name}</h1>
+        <p>{data.occupation}</p>
+      </header>
+      <div
+        className="article-body prose prose-lg dark:prose-invert"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    </article>
   )
 }
