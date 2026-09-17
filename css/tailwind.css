@@ -2,59 +2,375 @@
 @tailwind components;
 @tailwind utilities;
 
-.task-list-item::before {
-  @apply hidden;
+:root {
+  --paper: #faf9f6;
+  --ink: #252925;
+  --muted: #656b64;
+  --rule: #dedfd7;
+  --accent: #326348;
+  color-scheme: light;
 }
-
-.task-list-item {
-  @apply list-none;
+.dark {
+  --paper: #171b18;
+  --ink: #e4e8df;
+  --muted: #a3ada1;
+  --rule: #343e34;
+  --accent: #a3c6a7;
+  color-scheme: dark;
 }
-
-.footnotes {
-  @apply mt-12 border-t border-gray-200 pt-8 dark:border-gray-700;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
 }
-
-.data-footnote-backref {
-  @apply no-underline;
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Avenir Next', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
-
-.csl-entry {
-  @apply my-5;
+::selection {
+  background: #cddfca;
+  color: #18251b;
 }
-
+a,
+button,
+input,
+summary {
+  touch-action: manipulation;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+}
+.skip-link {
+  position: fixed;
+  top: -5rem;
+  left: 1rem;
+  padding: 0.7rem 1rem;
+  background: var(--paper);
+  z-index: 100;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+.page-intro {
+  padding: clamp(2rem, 6vw, 5rem) 0 3.5rem;
+  max-width: 48rem;
+}
+.eyebrow {
+  font-size: 0.72rem !important;
+  letter-spacing: 0.16em;
+  color: var(--accent) !important;
+  margin-bottom: 1.25rem;
+}
+.page-intro h1 {
+  font-family: 'Iowan Old Style', 'Songti SC', 'Noto Serif CJK SC', serif;
+  font-size: clamp(2rem, 5vw, 3.3rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.page-intro > p:last-child {
+  margin-top: 1.2rem;
+  font-size: 1.06rem;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.section-label {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1rem;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+.section-label h2 {
+  color: var(--ink);
+  font-weight: 600;
+}
+.post-list > li {
+  border-bottom: 1px solid var(--rule);
+}
+.post-row {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  gap: 2rem;
+  padding: 2.1rem 0;
+}
+.post-row time {
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding-top: 0.35rem;
+  font-variant-numeric: tabular-nums;
+}
+.post-row h2 {
+  font-size: clamp(1.2rem, 2.3vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+}
+.post-row h2 a:hover {
+  color: var(--accent);
+}
+.post-row p {
+  margin-top: 0.7rem;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.85;
+}
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.77rem;
+  margin-top: 1rem;
+}
+.post-meta a {
+  color: var(--accent);
+}
+.archive-link {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.8rem 0;
+  color: var(--accent);
+}
+.archive-tools {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+  padding: 0 0 1.5rem;
+}
+.archive-tools input {
+  border: 1px solid var(--rule);
+  background: transparent;
+  border-radius: 4px;
+  padding: 0.8rem 1rem;
+  flex: 1;
+  min-width: 0;
+  font-size: 0.95rem;
+}
+.archive-tools p {
+  white-space: nowrap;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.reading-page {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+.article-header {
+  padding: 2rem 0 2.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+.back-link {
+  color: var(--muted);
+  font-size: 0.85rem;
+  display: inline-block;
+  margin-bottom: 2.25rem;
+}
+.article-header h1 {
+  font-family: 'Iowan Old Style', 'Songti SC', 'Noto Serif CJK SC', serif;
+  font-size: clamp(1.9rem, 4.6vw, 3rem);
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin: 1rem 0;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.article-summary {
+  font-size: 1.06rem;
+  line-height: 1.9;
+  color: var(--muted);
+  margin-top: 1.3rem;
+}
+.article-toc {
+  border-bottom: 1px solid var(--rule);
+  padding: 1.5rem 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.article-toc summary {
+  cursor: pointer;
+  color: var(--ink);
+  font-weight: 600;
+}
+.article-toc ol {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem 0 0 1.2rem;
+}
+.article-toc a:hover {
+  color: var(--accent);
+}
+.article-body {
+  max-width: none;
+  padding-top: 2.6rem;
+  font-size: 1.08rem;
+  line-height: 1.95;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.article-body :where(h1, h2, h3, h4) {
+  color: var(--ink);
+  line-height: 1.5;
+  scroll-margin-top: 2rem;
+}
+.article-body h1 {
+  font-size: 1.9em;
+}
+.article-body h2 {
+  font-size: 1.5em;
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+}
+.article-body h3 {
+  font-size: 1.2em;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+}
+.article-body p {
+  margin: 1.3em 0;
+}
+.article-body li {
+  margin: 0.55em 0;
+}
+.article-body li > p {
+  margin: 0.6em 0;
+}
+.article-body a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.article-body strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+.article-body blockquote {
+  color: var(--muted);
+  font-weight: 400;
+  font-style: normal;
+  border-color: var(--rule);
+  quotes: none;
+}
+.article-body blockquote p:first-of-type::before,
+.article-body blockquote p:last-of-type::after {
+  content: none;
+}
+.article-body pre {
+  background: #202720;
+  color: #e1e8df;
+  padding: 1.4rem;
+  border-radius: 6px;
+  font-size: 0.81rem;
+  line-height: 1.8;
+  overflow-x: auto;
+  overflow-wrap: normal;
+}
+.article-body :not(pre) > code {
+  font-size: 0.86em;
+  font-weight: 500;
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  color: var(--ink);
+}
+.article-body code::before,
+.article-body code::after {
+  content: none;
+}
+.article-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin: 2rem auto;
+}
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+.article-body table {
+  margin: 0;
+  min-width: 30rem;
+  font-size: 0.88em;
+}
+.article-body th,
+.article-body td {
+  padding: 0.7em 0.9em;
+  border-bottom: 1px solid var(--rule);
+}
+.article-body hr {
+  border-color: var(--rule);
+  margin: 3rem 0;
+}
+.article-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--rule);
+  padding: 2rem 0;
+  margin-top: 3rem;
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+.related-posts {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  font-size: 0.95rem;
+}
+.related-posts h2 {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.empty-note {
+  margin: 3rem 0;
+  color: var(--muted);
+}
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
+}
+@media (max-width: 640px) {
+  .post-row {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    padding: 1.6rem 0;
+  }
+  .article-body {
+    font-size: 1rem;
+  }
+  .article-footer {
+    flex-direction: column;
+  }
+  .page-intro {
+    padding-bottom: 2.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
-/* https://stackoverflow.com/questions/61083813/how-to-avoid-internal-autofill-selected-style-to-be-applied */
-input:-webkit-autofill,
-input:-webkit-autofill:focus {
-  transition:
-    background-color 600000s 0s,
-    color 600000s 0s;
+.article-body .task-list-item {
+  list-style: none;
 }
-
-.katex-display {
-  overflow: auto hidden;
-}
-
-.content-header-link {
-  opacity: 0;
-  margin-left: -24px;
-  padding-right: 4px;
-}
-
-.content-header:hover .content-header-link,
-.content-header-link:hover {
-  opacity: 1;
-}
-
-.linkicon {
-  display: inline-block;
-  vertical-align: middle;
+.article-body .task-list-item-checkbox {
+  margin-right: 0.6em;
+  accent-color: var(--accent);
 }

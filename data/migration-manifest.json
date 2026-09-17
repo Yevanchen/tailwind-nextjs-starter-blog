@@ -1,0 +1,256 @@
+[
+  {
+    "file": "data/blog/imported-1GWElB08trWppNyVVfgL.md",
+    "slug": "-script",
+    "originalSlug": "-script",
+    "contentSha256": "4788690bcf5c6e554d7e8999434d20cbc75dd261221a5581610c0b0d32f09dc5",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-27Fcwu3FwEfIkSxRyGWG.md",
+    "slug": "-beyond-qa",
+    "originalSlug": "-beyond-qa",
+    "contentSha256": "4bf1c7c9feae758bc84962e405e6842acb47edcc100eecab49cb695d7b904bbd",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-2ZWWnrWm9JUP6SQR2m5f.md",
+    "slug": "cursor-tab-",
+    "originalSlug": "cursor-tab-",
+    "contentSha256": "f2770b133bc38627497ce2bdc885d88ee3e6fc67e07b921f12611711864dc189",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-4VsyyjCwyOmDfhXXcNm7.md",
+    "slug": "ui-hitl-l3-interface-for-work",
+    "originalSlug": "ui-hitl-l3-interface-for-work",
+    "contentSha256": "d05fba4f598086b482d9d9df4775f5e27fb902be4a3c39acaf849877385cca95",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-6DZq37t66LPTOb31Lcu1.md",
+    "slug": "-target-function-calling-",
+    "originalSlug": "-target-function-calling-",
+    "contentSha256": "92ba14ab176f30d20b069ccf09d7170fa8c2bca0e2e330554d4ea697c23b49e8",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-6yVBhaCBSr3ifsr7XMdn.md",
+    "slug": "usecase-",
+    "originalSlug": "usecase-",
+    "contentSha256": "6edbef8740eadf0970223084f3c7a0483a74b97de4b12e9a5ed8826c4a7d1024",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-FwpNCuFUJ5kPhgIzQJyQ.md",
+    "slug": "thoughts-on-lamai",
+    "originalSlug": "thoughts-on-lamai",
+    "contentSha256": "1d0d08a7efc3110ebca15fd4ebfbb60b352cc95c22be7ea244240f0dfd50556c",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-HY5za5ROCP7WOxHjO0pI.md",
+    "slug": "debugging",
+    "originalSlug": "debugging",
+    "contentSha256": "722a3a5b392d53900d00b982ffb10dc80d71cf2711ea5d867e40306fb3482337",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-ILrSSvO7laPRmT3KH71L.md",
+    "slug": "和路宇讨论有感-script 后时代",
+    "originalSlug": "和路宇讨论有感-script 后时代",
+    "contentSha256": "e117ca5fb16edb51c1ea534714ab2e5d57368301d899d5478de4a75e487529fd",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-MAgNykP7msKqCZSBizNW.md",
+    "slug": "workspace-as-a-collaborative-ai-environment",
+    "originalSlug": "workspace-as-a-collaborative-ai-environment",
+    "contentSha256": "38d22c6559c4a3f06b97453b1bc0282bb555c4d5742738dc4b51724120311b6d",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-NXKBkI879EaxIo8hF2a9.md",
+    "slug": "-hackathon-",
+    "originalSlug": "-hackathon-",
+    "contentSha256": "d8fa8629dfd08f4d356c8b8f187bf09af83bbad449c8978c338e0647defe2e58",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-QLeprgpyAbZvJ5ZZezai.md",
+    "slug": "cursor-rule",
+    "originalSlug": "cursor-rule",
+    "contentSha256": "877f5660c79eeaec8bca44b42ffd9bc817837c5160ad1e0e197fdc3322791b03",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-RHllhqwKqlWD9dcde49B.md",
+    "slug": "plan-and-act-agent-",
+    "originalSlug": "plan-and-act-agent-",
+    "contentSha256": "e983f432e065b8fd9f1a08f6b62b996a32aeeb85d70c9c92af1bc826c5eab8da",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-UED3I2ou1BVDGHSn2BZV.md",
+    "slug": "script-",
+    "originalSlug": "script-",
+    "contentSha256": "fdbd309e24381488c670c0e432f57293268a45f1ff5a3e345d9049270ef84f02",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-V4NaLweCiiLw4a7CirR8.md",
+    "slug": "hello-world",
+    "originalSlug": "hello-world",
+    "contentSha256": "763511969807a480877f36ab31255fe899137898e9c35b0dfbc1c3f0415d6dea",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-VjQPzLL91W1gDnSaJZEC.md",
+    "slug": "ui-",
+    "originalSlug": "ui-",
+    "contentSha256": "0b93fae379cf15cbcb7cf4f99f610ff3f4a16b02758770a9fec6480c00798b27",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-VzlV5TN6jBPRGq5fGZm4.md",
+    "slug": "linear-",
+    "originalSlug": "linear-",
+    "contentSha256": "49e9f10ab52f288a29920524563cead2d57f7df952b26d958d318572ba2718bb",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-W1bpSuESgmUxh1F9zaWG.md",
+    "slug": "以复利为中心的策略",
+    "originalSlug": "以复利为中心的策略",
+    "contentSha256": "65e5db1fc801d66b1e88c06f57c4a801edc1b2e68fed0e05c797d3a6ab3a03f3",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-XjU9Gh7blhlimt0H4tQL.md",
+    "slug": "subagent-",
+    "originalSlug": "subagent-",
+    "contentSha256": "339fb3b31d48ec808565e103fba9240f2e514cc5ee7dea6b826aeaf14c858b94",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-Yt2eO1zULeZfVBVynQeR.md",
+    "slug": "-ide-",
+    "originalSlug": "-ide-",
+    "contentSha256": "dda3f203bfdb3dbd80b7ff7cc99ba4a7d62a3ca3e4a1e30676c5feb17851b80a",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-af8yr9ykobKWcYWNPCSv.md",
+    "slug": "-dify-",
+    "originalSlug": "-dify-",
+    "contentSha256": "29e079a0299ba70f43f2f9eff78b73b5be73af5d61973378afc601de595512c2",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-b172HgmA7X2E7Zt9t4Zr.md",
+    "slug": "-agent-action-trace-save-workflow",
+    "originalSlug": "-agent-action-trace-save-workflow",
+    "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emptyBody": true
+  },
+  {
+    "file": "data/blog/imported-clawdbot.md",
+    "slug": "clawdbot",
+    "originalSlug": "clawdbot",
+    "contentSha256": "7696d35c2a34f8ff8eb3f7a99590a889ff2d29efe0e6c540386ecc66b0c6ca2c",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-clawdbot-github.md",
+    "slug": "clawdbot-github",
+    "originalSlug": "clawdbot-github",
+    "contentSha256": "4b30be91dd67cc41528d3a561a2ed531d854beeee320c52100a7c69be5384401",
+    "emptyBody": false,
+    "redactedCredentials": 1,
+    "migratedContentSha256": "2c2666cc536e3dfc048a48ea265087ef56ce6123040afcce42b4a3acc7b47c13"
+  },
+  {
+    "file": "data/blog/imported-dR01DlA2JEYVdonfQY0q.md",
+    "slug": "agent-",
+    "originalSlug": "agent-",
+    "contentSha256": "f0d82e0e3fb3279b8277deb22bd06a463c186189e6d07f7252a6c2aa1488e273",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-diYK6Cm5nxQuaSrGp9ZW.md",
+    "slug": "workflow-",
+    "originalSlug": "workflow-",
+    "contentSha256": "c57e8701d806e6250b32aa2a34b27ea6b2429287612784abb376f93c3a6d053c",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-lD7pSsHrKaW3wVODqbt1.md",
+    "slug": "release",
+    "originalSlug": "release",
+    "contentSha256": "b1a5de7e3147b739b5fc365968459bb56655d24b2751dfd430525b8c43d8848e",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-mLQxdtcZnVddi78LWOYY.md",
+    "slug": "从后端出发的产品设计",
+    "originalSlug": "从后端出发的产品设计",
+    "contentSha256": "0119127147ed5dbd1e18251d324265a97eff84141f2f8fc23ac0d44e8d195dfc",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-qGqq1BUgTrEWpGhQx1Ww.md",
+    "slug": "-make-it-true",
+    "originalSlug": "-make-it-true",
+    "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emptyBody": true
+  },
+  {
+    "file": "data/blog/imported-sKz090ugTfYwnhEkH7kb.md",
+    "slug": "22",
+    "originalSlug": "22",
+    "contentSha256": "b89d027ef270555b0dbcfba89cf6e2ee00b088002400df6d439464f779cf9e47",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-sgJJgqAsPxV4QUvDPhIY.md",
+    "slug": "daily-progress",
+    "originalSlug": "",
+    "contentSha256": "a462e3f8c501d778fc6ffb2eb74aa46d729331fee106144385a76e7b59236379",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-touDhekGZXFchqjXg1Vy.md",
+    "slug": "rock-agentscript",
+    "originalSlug": "rock-agentscript",
+    "contentSha256": "c8ba0f4e514fa53e8c3a9808ece595ea1b94d57e55facc720d6319c08f0081ef",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-twKs4ibidVqI5Qt9fnmF.md",
+    "slug": "bad-habits",
+    "originalSlug": "bad-habits",
+    "contentSha256": "d75dd33c4ec84fde0b99af7731812d6480d948eb8e4b8c4e07c78f82ebea4114",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-uIUtgJvP2Q51tk0WmfUR.md",
+    "slug": "-script-",
+    "originalSlug": "-script-",
+    "contentSha256": "3f8a25bfb26383ebcac6009a7467593ddb77bffe139a1f068f461585d69c5d8b",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-uV8UT5869nZRVu1CuEVv.md",
+    "slug": "-workflow",
+    "originalSlug": "-workflow",
+    "contentSha256": "58c7b786b60f6244898d18fb28e9458142a99247dd3dd55db2921682d300e4e5",
+    "emptyBody": false
+  },
+  {
+    "file": "data/blog/imported-zgQcZjtA9a1iEIPmVBkf.md",
+    "slug": "-pm-",
+    "originalSlug": "-pm-",
+    "contentSha256": "cfbdaff176bdf9760c7ed937203922a78a27552b27fe37c9e6bcc8fb44b33acf",
+    "emptyBody": false
+  }
+]

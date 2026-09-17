@@ -57,3 +57,7 @@ tmp/
 *.njsproj
 *.sln
 *.sw?
+
+# Cloudflare and package-manager caches
+.wrangler/
+.yarn/
