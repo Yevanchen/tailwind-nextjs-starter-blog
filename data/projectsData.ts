@@ -55,7 +55,7 @@ const projectsData: Project[] = [
     title: 'fygen',
     description: '我们在 2025 adventure hackathon 的作品 让Agent 给其他Agent 做可用的工具',
     imgSrc: 'https://raw.githubusercontent.com/Yevanchen/images/main/myblog/20250821005136561.png',
-    href: 'https://fygen.idoknow.top/',
+    href: 'https://github.com/langgenius/dify-auto-plugin',
   },
   {
     title: '生日贺卡 for 舒舒',
