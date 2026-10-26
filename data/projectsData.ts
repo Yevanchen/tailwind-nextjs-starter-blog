@@ -7,6 +7,13 @@ interface Project {
 
 const projectsData: Project[] = [
   {
+    title: 'mosoo',
+    description:
+      'mosoo 是一个开源、API 优先的托管 Agent 运行时，面向应用后端。在本地能跑的 OpenAI Codex、Claude Agent SDK、OpenCode 或 Pi Agent，在 mosoo 云端配置一次，就能交给后端调用，每个任务一个 Session。',
+    imgSrc: '/static/images/mosoo.png',
+    href: 'https://mosoo.ai',
+  },
+  {
     title: 'Suno ai remix 专辑',
     description: `说唱/流行remix精选 by Sunoai,我如果可以选艺术那我绕不开的就是音乐,音乐陪伴了我太多 我讨厌 emo 的音乐 `,
     imgSrc: '/static/images/sunoai.webp',
